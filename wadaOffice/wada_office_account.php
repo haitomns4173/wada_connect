@@ -11,7 +11,7 @@ if (!isset($_SESSION['userLoginStatus']) || $_SESSION['userLoginStatus'] !== tru
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wada Office Account - WadaConnect</title>
+  <title>Wada Office Account - Wada Connect</title>
 
   <link rel="shortcut icon" href="../assets/compiled/jpg/shortcut.png" type="image/png"/>
 

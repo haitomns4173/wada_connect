@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - WadaConnect</title>
+    <title>Login - Wada Connect</title>
     
     <link rel="shortcut icon" href="./assets/compiled/jpg/shortcut.png" type="image/png"/>
 
