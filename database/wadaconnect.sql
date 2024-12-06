@@ -1,0 +1,1380 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3306
+-- Generation Time: Dec 03, 2024 at 05:17 AM
+-- Server version: 8.3.0
+-- PHP Version: 8.2.18
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `wadaconnect`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadaconnectapplicationlisting`
+--
+
+DROP TABLE IF EXISTS `wadaconnectapplicationlisting`;
+CREATE TABLE IF NOT EXISTS `wadaconnectapplicationlisting` (
+  `wadaConnectApplicationListingID` int NOT NULL AUTO_INCREMENT,
+  `wadaConnectApplicationID` int NOT NULL,
+  `wadaConnectApplicationUserID` int NOT NULL,
+  `wadaConnectApplicationType` int NOT NULL,
+  `wadaConnectApplicationWadaSentStatus` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaConnectApplicationWadaSentDateTime` datetime DEFAULT NULL,
+  `wadaConnectApplicationStatus` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaConnectApplicationApprovedDocument` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `wadaConnectApplicationRemarks` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `wadaConnectApplicationDateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wadaConnectApplicationListingID`),
+  KEY `wadaConnectApplicationUserIDRef` (`wadaConnectApplicationUserID`),
+  KEY `wadaConnectApplicationTypeRef` (`wadaConnectApplicationType`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadaconnectapplicationtype`
+--
+
+DROP TABLE IF EXISTS `wadaconnectapplicationtype`;
+CREATE TABLE IF NOT EXISTS `wadaconnectapplicationtype` (
+  `wadaConnectApplicationTypeID` int NOT NULL AUTO_INCREMENT,
+  `wadaConnectApplicationTypeName` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`wadaConnectApplicationTypeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wadaconnectapplicationtype`
+--
+
+INSERT INTO `wadaconnectapplicationtype` (`wadaConnectApplicationTypeID`, `wadaConnectApplicationTypeName`) VALUES
+(1, 'Four Boundaries Verification'),
+(2, 'Electricity Connection Recommendation'),
+(3, 'Relation Verification'),
+(4, 'House/Road Verification');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadaconnectcitytypenepal`
+--
+
+DROP TABLE IF EXISTS `wadaconnectcitytypenepal`;
+CREATE TABLE IF NOT EXISTS `wadaconnectcitytypenepal` (
+  `cityTypeID` int NOT NULL AUTO_INCREMENT,
+  `cityTypeNepaliName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cityNameEnglishName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`cityTypeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wadaconnectcitytypenepal`
+--
+
+INSERT INTO `wadaconnectcitytypenepal` (`cityTypeID`, `cityTypeNepaliName`, `cityNameEnglishName`) VALUES
+(1, 'गाउँपालिका', 'Rural Municipality'),
+(2, 'नगरपालिका', 'Municipality'),
+(3, 'उप-महानगरपालिका', 'Sub-Metropolitian City'),
+(4, 'महानगरपालिका', 'Metropolitian City');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadaconnectdistrictnepal`
+--
+
+DROP TABLE IF EXISTS `wadaconnectdistrictnepal`;
+CREATE TABLE IF NOT EXISTS `wadaconnectdistrictnepal` (
+  `districtNepalID` int NOT NULL AUTO_INCREMENT,
+  `districtEnglishName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `districtNepaliName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `districtHeadQuartersEnglishName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `districtHeadQuartersNepaliName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provinceDistrictNepalID` int NOT NULL,
+  PRIMARY KEY (`districtNepalID`),
+  KEY `provinceDistrictNepalIDRef` (`provinceDistrictNepalID`)
+) ENGINE=InnoDB AUTO_INCREMENT=543 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wadaconnectdistrictnepal`
+--
+
+INSERT INTO `wadaconnectdistrictnepal` (`districtNepalID`, `districtEnglishName`, `districtNepaliName`, `districtHeadQuartersEnglishName`, `districtHeadQuartersNepaliName`, `provinceDistrictNepalID`) VALUES
+(1, 'Taplejung', 'ताप्लेजुङ', 'Phungling', 'फुङलिङ', 1),
+(2, 'Panchthar', 'पाँचथर', 'PhdistrictNepalIDim', 'फिदिम', 1),
+(3, 'Ilam', 'इलाम', 'Ilam', 'इलाम', 1),
+(4, 'Jhapa', 'झापा', 'Bhadrapur', 'भद्रपुर', 1),
+(5, 'Morang', 'मोरङ', 'Biratnagar', 'बिराटनगर', 1),
+(6, 'Sunsari', 'सुनसरी', 'Inaruwa', 'इनरुवा', 1),
+(7, 'Dhankuta', 'धनकुटा', 'Dhankuta', 'धनकुटा', 1),
+(8, 'Tehrathum', 'तेह्रथुम', 'Myanglung', 'म्याङलुङ', 1),
+(9, 'Sankhuwasabha', 'संखुवासभा', 'Khandbari', 'खाँदबारी', 1),
+(10, 'Bhojpur', 'भोजपुर', 'Bhojpur', 'भोजपुर', 1),
+(11, 'Solukhumbu', 'सोलुखुम्बु', 'Solududhkunda', 'सोलुदुधकुण्ड', 1),
+(12, 'Okhaldhunga', 'ओखलढुंगा', 'SdistrictNepalIDdhicharan', 'सिद्धिचरण', 1),
+(13, 'Khotang', 'खोटाङ', 'Diktel Rupakot Majhuwagadhi', 'दिक्तेल रुपाकोट मझुवागढी', 1),
+(14, 'Udayapur', 'उदयपुर', 'Triyuga', 'त्रियुगा', 1),
+(15, 'Saptari', 'सप्तरी', 'Rajbiraj', 'राजविराज', 2),
+(16, 'Siraha', 'सिराहा', 'Siraha', 'सिराहा', 2),
+(17, 'Dhanusha', 'धनुषा', 'Janakpurdham', 'जनकपुरधाम', 2),
+(18, 'Mahottari', 'महोत्तरी', 'Jaleshwar', 'जलेश्वर', 2),
+(19, 'Sarlahi', 'सर्लाही', 'Malangwa', 'मलंगवा', 2),
+(20, 'Sindhuli', 'सिन्धुली', 'Kamalamai', 'कमलामाई', 3),
+(21, 'Ramechhap', 'रामेछाप', 'Manthali', 'मन्थली', 3),
+(22, 'Dolakha', 'दोलखा', 'Bhimeshwar', 'भिमेश्वर', 3),
+(23, 'Sindhupalchok', 'सिन्धुपाल्चोक', 'Chautara Sangachowkgadhi', 'चौतारा साँगाचोकगढी', 3),
+(24, 'Kavrepalanchok', 'काभ्रेपलाञ्चोक', 'Dhulikhel', 'धुलिखेल', 3),
+(25, 'Lalitpur', 'ललितपुर', 'Lalitpur', 'ललितपुर', 3),
+(26, 'Bhaktapur', 'भक्तपुर', 'Bhaktapur', 'भक्तपुर', 3),
+(27, 'Kathmandu', 'काठमाण्डौं', 'Kathmandu', 'काठमाण्डौं', 3),
+(28, 'Nuwakot', 'नुवाकोट', 'BdistrictNepalIDur', 'बिदुर', 3),
+(29, 'Rasuwa', 'रसुवा', 'Gosaikunda', 'गोसाईकुण्ड', 3),
+(30, 'Dhading', 'धादिङ', 'Neelakantha', 'निलकण्ठ', 3),
+(31, 'Makwanpur', 'मकवानपुर', 'Hetauda', 'हेटौडा', 3),
+(32, 'Rautahat', 'रौतहट', 'Gaur', 'गौर', 2),
+(33, 'Bara', 'बारा', 'Kalaiya', 'कलैया', 2),
+(34, 'Parsa', 'पर्सा', 'Birgunj', 'बीरगञ्ज', 2),
+(35, 'Chitwan', 'चितवन', 'Bharatpur', 'भरतपुर', 3),
+(36, 'Gorkha', 'गोरखा', 'Gorkha', 'गोरखा', 4),
+(37, 'Lamjung', 'लमजुङ', 'Besishahar', 'बेसीशहर', 4),
+(38, 'Tanahun', 'तनहुँ', 'Vyas', 'व्यास', 4),
+(39, 'Syangja', 'स्याङजा', 'Putalibazar', 'पुतलीबजार', 4),
+(40, 'Kaski', 'कास्की', 'Pokhara', 'पोखरा', 4),
+(41, 'Manang', 'मनाङ', 'Chame', 'चामे', 4),
+(42, 'Mustang', 'मुस्ताङ', 'Gharapjhong', 'घरपझोङ', 4),
+(43, 'Myagdi', 'म्याग्दी', 'Beni', 'बेनी', 4),
+(44, 'Parbat', 'पर्वत', 'Kusma', 'कुश्मा', 4),
+(45, 'Baglung', 'बाग्लुङ', 'Baglung', 'बागलुङ', 4),
+(46, 'Gulmi', 'गुल्मी', 'Resunga', 'रेसुङ्गा', 5),
+(47, 'Palpa', 'पाल्पा', 'Tansen', 'तानसेन', 5),
+(49, 'Rupandehi', 'रूपन्देही', 'SdistrictNepalIDdharthanagar', 'सिद्धार्थनगर', 5),
+(50, 'Kapilvastu', 'कपिलबस्तु', 'Kapilvastu', 'कपिलवस्तु', 5),
+(51, 'Arghakhanchi', 'अर्घाखाँची', 'Sandhikharka', 'सन्धीखर्क', 5),
+(52, 'Pyuthan', 'प्यूठान', 'Pyuthan', 'प्युठान', 5),
+(53, 'Rolpa', 'रोल्पा', 'Rolpa', 'रोल्पा', 5),
+(55, 'Salyan', 'सल्यान', 'Shaarada', 'शारदा', 6),
+(56, 'Dang', 'दाङ', 'Ghorahi', 'घोराही', 5),
+(57, 'Banke', 'बाँके', 'Nepalganj', 'नेपालगञ्ज', 5),
+(58, 'Bardiya', 'बर्दिया', 'Gulariya', 'गुलरिया', 5),
+(59, 'Surkhet', 'सुर्खेत', 'Birendranagar', 'बिरेन्द्रनगर', 6),
+(60, 'Dailekh', 'दैलेख', 'Narayan', 'नारायण', 6),
+(61, 'Jajarkot', 'जाजरकोट', 'Bheri', 'भेरी', 6),
+(62, 'Dolpa', 'डोल्पा', 'Thuli Bheri', 'ठूली भेरी', 6),
+(63, 'Jumla', 'जुम्ला', 'Chandannath', 'चन्दननाथ', 6),
+(64, 'Kalikot', 'कालिकोट', 'Khandachakra', 'खाँडाचक्र', 6),
+(65, 'Mugu', 'मुगु', 'Chhayanath Rara', 'छायाँनाथ रारा', 6),
+(66, 'Humla', 'हुम्ला', 'Simikot', 'सिमिकोट', 6),
+(67, 'Bajura', 'बाजुरा', 'Badimalika', 'बडीमालिका', 7),
+(68, 'Bajhang', 'बझाङ', 'Jayaprithvi', 'जयपृथ्वी', 7),
+(69, 'Achham', 'अछाम', 'Mangalsen', 'मङ्गलसेन', 7),
+(70, 'Doti', 'डोटी', 'Dipayal Silgadhi', 'दिपायल सिलगढी', 7),
+(71, 'Kailali', 'कैलाली', 'Dhangadhi', 'धनगढी', 7),
+(72, 'Kanchanpur', 'कञ्चनपुर', 'Bheemdatta', 'भिमदत्त', 7),
+(73, 'Dadeldhura', 'डडेल्धुरा', 'Amargadhi', 'अमरगढी', 7),
+(74, 'Baitadi', 'बैतडी', 'Dasharathchand', 'दशरथचन्द', 7),
+(75, 'Darchula', 'दार्चुला', 'Mahakali', 'महाकाली', 7),
+(481, 'Nawalparasi East', 'नवलपरासी पूर्व', 'Kawasoti', 'कावासोती', 4),
+(482, 'Nawalparasi West', 'नवलपरासी पश्चिम', 'Ramgram', 'रामग्राम', 5),
+(541, 'Rukum East', 'रुकुम पूर्व', 'Sisne', 'सिस्ने', 5),
+(542, 'Rukum West', 'रुकुम पश्चिम', 'Musikot', 'मुसीकोट', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadaconnectlocallevelnepal`
+--
+
+DROP TABLE IF EXISTS `wadaconnectlocallevelnepal`;
+CREATE TABLE IF NOT EXISTS `wadaconnectlocallevelnepal` (
+  `localLevelNepalID` int NOT NULL AUTO_INCREMENT,
+  `localLevelEnglishName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `localLevelNepaliName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `localLevelDistrictID` int NOT NULL,
+  `localLevelCityTypeID` int NOT NULL,
+  `localLevelTotalWardID` int NOT NULL,
+  PRIMARY KEY (`localLevelNepalID`),
+  KEY `localLevelDistrictIDRef` (`localLevelDistrictID`),
+  KEY `localLevelCityTypeIDRef` (`localLevelCityTypeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=753 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wadaconnectlocallevelnepal`
+--
+
+INSERT INTO `wadaconnectlocallevelnepal` (`localLevelNepalID`, `localLevelEnglishName`, `localLevelNepaliName`, `localLevelDistrictID`, `localLevelCityTypeID`, `localLevelTotalWardID`) VALUES
+(1, 'Aamchowk', 'आमचोक', 10, 1, 10),
+(2, 'Arun', 'अरुण', 10, 1, 7),
+(3, 'Bhojpur', 'भोजपुर', 10, 2, 12),
+(4, 'Hatuwagadhi', 'हतुवागढी', 10, 1, 9),
+(5, 'Pauwadungma', 'पौवादुङमा', 10, 1, 6),
+(6, 'Ramprasad Rai', 'रामप्रसाद राई', 10, 1, 8),
+(7, 'Salpasilichho', 'साल्पासिलिछो', 10, 1, 6),
+(8, 'Shadananda', 'षडानन्द', 10, 2, 14),
+(9, 'Temkemaiyum', 'टेम्केमैयुङ', 10, 1, 9),
+(10, 'Chaubise', 'चौविसे', 7, 1, 8),
+(11, 'Chhathar Jorpati', 'छथर जोरपाटी', 7, 1, 6),
+(12, 'Dhankuta', 'धनकुटा', 7, 2, 10),
+(13, 'Shahidbhumi', 'सहिदभूमि', 7, 1, 7),
+(14, 'Mahalaxmi', 'महालक्ष्मी', 7, 2, 9),
+(15, 'Pakhribas', 'पाख्रिबास', 7, 2, 10),
+(16, 'Sangurigadhi', 'साँगुरीगढी', 7, 1, 10),
+(17, 'Chulachuli', 'चुलाचुली', 3, 1, 6),
+(18, 'Deumai', 'देउमाई', 3, 2, 9),
+(19, 'Fakphokthum', 'फाकफोकथुम', 3, 1, 7),
+(20, 'Illam', 'ईलाम', 3, 2, 12),
+(21, 'Mai', 'माई', 3, 2, 10),
+(22, 'Maijogmai', 'माईजोगमाई', 3, 1, 6),
+(23, 'Mangsebung', 'माङसेबुङ', 3, 1, 6),
+(24, 'Rong', 'रोङ', 3, 1, 6),
+(25, 'Sandakpur', 'सन्दकपुर', 3, 1, 5),
+(26, 'Suryodaya', 'सूर्योदय', 3, 2, 14),
+(27, 'Arjundhara', 'अर्जुनधारा', 4, 2, 11),
+(28, 'Barhadashi', 'बाह्रदशी', 4, 1, 7),
+(29, 'Bhadrapur', 'भद्रपुर', 4, 2, 10),
+(30, 'Birtamod', 'विर्तामोड', 4, 2, 10),
+(31, 'Buddhashanti', 'बुद्धशान्ति', 4, 1, 7),
+(32, 'Damak', 'दमक', 4, 2, 10),
+(33, 'Gauradhaha', 'गौरादह', 4, 2, 9),
+(34, 'Gauriganj', 'गौरीगंज', 4, 1, 6),
+(35, 'Haldibari', 'हल्दिवारी', 4, 1, 5),
+(36, 'Jhapa', 'झापा', 4, 1, 7),
+(37, 'Kachankawal', 'कचनकवल', 4, 1, 7),
+(38, 'Kamal', 'कमल', 4, 1, 7),
+(39, 'Kankai', 'कन्काई', 4, 2, 9),
+(40, 'Mechinagar', 'मेची', 4, 2, 15),
+(41, 'Shivasataxi', 'शिवशताक्षी', 4, 2, 11),
+(42, 'Ainselukhark', 'ऐसेलुखर्क', 13, 1, 7),
+(43, 'Barahapokhari', 'वराहपोखरी', 13, 1, 6),
+(44, 'Diprung Chuichumma', 'दिप्रुङ चुइचुम्मा', 13, 1, 7),
+(45, 'Halesi Tuwachung', 'हलेसी तुवाचुङ', 13, 2, 11),
+(46, 'Jantedhunga', 'जन्तेढुंगा', 13, 1, 6),
+(47, 'Kepilasagadhi', 'केपिलासगढी', 13, 1, 7),
+(48, 'Khotehang', 'खोटेहाङ', 13, 1, 9),
+(49, 'Rawa Besi', 'रावा बेसी', 13, 1, 6),
+(50, 'Diktel Rupakot Majhuwagadhi', 'दिक्तेल रुपाकोट मझुवागढी', 13, 2, 15),
+(51, 'Sakela', 'साकेला', 13, 1, 5),
+(52, 'Belbari', 'बेलवारी', 5, 2, 11),
+(53, 'Biratnagar', 'विराटनगर', 5, 4, 19),
+(54, 'Budhiganga', 'बुढीगंगा', 5, 1, 7),
+(55, 'Dhanpalthan', 'धनपालथान', 5, 1, 7),
+(56, 'Gramthan', 'ग्रामथान', 5, 1, 7),
+(57, 'Jahada', 'जहदा', 5, 1, 7),
+(58, 'Kanepokhari', 'कानेपोखरी', 5, 1, 7),
+(59, 'Katahari', 'कटहरी', 5, 1, 7),
+(60, 'Kerabari', 'केरावारी', 5, 1, 10),
+(61, 'Letang', 'लेटाङ', 5, 2, 9),
+(62, 'Miklajung', 'मिक्लाजुङ', 5, 1, 9),
+(63, 'Patahrishanishchare', 'पथरी शनिश्चरे', 5, 2, 10),
+(64, 'Rangeli', 'रंगेली', 5, 2, 9),
+(65, 'Ratuwamai', 'रतुवामाई', 5, 2, 10),
+(66, 'Sundarharaicha', 'सुन्दरहरैचा', 5, 2, 12),
+(67, 'Sunwarshi', 'सुनवर्षि', 5, 2, 9),
+(68, 'Uralabari', 'उर्लावारी', 5, 2, 9),
+(69, 'Champadevi', 'चम्पादेवी', 12, 1, 10),
+(70, 'Chisankhugadhi', 'चिशंखुगढी', 12, 1, 8),
+(71, 'Khijidemba', 'खिजिदेम्बा', 12, 1, 9),
+(72, 'Manebhanjyang', 'मानेभञ्याङ', 12, 1, 9),
+(73, 'Molung', 'मोलुङ', 12, 1, 8),
+(74, 'Siddhicharan', 'सिद्दिचरण', 12, 2, 12),
+(75, 'Sunkoshi', 'सुनकोशी', 12, 1, 10),
+(76, 'Falelung', 'फालेलुङ', 2, 1, 8),
+(77, 'Falgunanda', 'फाल्गुनन्द', 2, 1, 7),
+(78, 'Hilihang', 'हिलिहाङ', 2, 1, 7),
+(79, 'Kummayak', 'कुम्मायक', 2, 1, 5),
+(80, 'Miklajung', 'मिक्लाजुङ', 2, 1, 8),
+(81, 'Phidim', 'फिदिम', 2, 2, 14),
+(82, 'Tumbewa', 'तुम्बेवा', 2, 1, 5),
+(83, 'Yangwarak', 'याङवरक', 2, 1, 6),
+(84, 'Bhotkhola', 'भोटखोला', 9, 1, 5),
+(85, 'Chainpur', 'चैनपुर', 9, 2, 11),
+(86, 'Chichila', 'चिचिला', 9, 1, 5),
+(87, 'Dharmadevi', 'धर्मदेवी', 9, 2, 9),
+(88, 'Khandbari', 'खाँदवारी', 9, 2, 11),
+(89, 'Madi', 'मादी', 9, 2, 9),
+(90, 'Makalu', 'मकालु', 9, 1, 6),
+(91, 'Panchakhapan', 'पाँचखपन', 9, 2, 9),
+(92, 'Sabhapokhari', 'सभापोखरी', 9, 1, 6),
+(93, 'Silichong', 'सिलीचोङ', 9, 1, 5),
+(94, 'Thulung Dudhkoshi', 'थुलुङ दुधकोशी', 11, 1, 9),
+(95, 'Mapya Dudhkoshi', 'माप्य दुधकोशी', 11, 1, 7),
+(96, 'Khumbupasanglahmu', 'खुम्वु पासाङल्हमु', 11, 1, 5),
+(97, 'Likhupike', 'लिखु पिके', 11, 1, 5),
+(98, 'Mahakulung', 'माहाकुलुङ', 11, 1, 5),
+(99, 'Nechasalyan', 'नेचासल्यान', 11, 1, 5),
+(100, 'Solududhakunda', 'सोलुदुधकुण्ड', 11, 2, 11),
+(101, 'Sotang', 'सोताङ', 11, 1, 5),
+(102, 'Barahchhetra', 'बराहक्षेत्र', 6, 2, 11),
+(103, 'Barju', 'बर्जु', 6, 1, 6),
+(104, 'Bhokraha Narshing', 'भोक्राहा नरसिंह', 6, 1, 8),
+(105, 'Dewanganj', 'देवानगञ्ज', 6, 1, 7),
+(106, 'Dharan', 'धरान', 6, 3, 20),
+(107, 'Duhabi', 'दुहवी', 6, 2, 12),
+(108, 'Gadhi', 'गढी', 6, 1, 6),
+(109, 'Harinagar', 'हरि', 6, 1, 7),
+(110, 'Inaruwa', 'ईनरुवा', 6, 2, 10),
+(111, 'Itahari', 'ईटहरी', 6, 3, 20),
+(112, 'Koshi', 'कोशी', 6, 1, 8),
+(113, 'Ramdhuni', 'रामधुनी', 6, 2, 9),
+(114, 'Aathrai Tribeni', 'आठराई त्रिवेणी', 1, 1, 5),
+(115, 'Maiwakhola', 'मैवाखोला', 1, 1, 6),
+(116, 'Meringden', 'मेरिङदेन', 1, 1, 6),
+(117, 'Mikwakhola', 'मिक्वाखोला', 1, 1, 5),
+(118, 'Phaktanglung', 'फक्ताङलुङ', 1, 1, 7),
+(119, 'Phungling', 'फुङलिङ', 1, 2, 11),
+(120, 'Sidingba', 'सिदिङ्वा', 1, 1, 7),
+(121, 'Sirijangha', 'सिरीजङ्घा', 1, 1, 8),
+(122, 'Pathibhara Yangwarak', 'पाथीभरा याङवरक', 1, 1, 6),
+(123, 'Aathrai', 'आठराई', 8, 1, 7),
+(124, 'Chhathar', 'छथर', 8, 1, 6),
+(125, 'Laligurans', 'लालीगुराँस', 8, 2, 9),
+(126, 'Menchayam', 'मेन्छयायेम', 8, 1, 6),
+(127, 'Myanglung', 'म्याङलुङ', 8, 2, 10),
+(128, 'Phedap', 'फेदाप', 8, 1, 5),
+(129, 'Belaka', 'वेलका', 14, 2, 9),
+(130, 'Chaudandigadhi', 'चौदण्डीगढी', 14, 2, 10),
+(131, 'Katari', 'कटारी', 14, 2, 14),
+(132, 'Rautamai', 'रौतामाई', 14, 1, 8),
+(133, 'Limchungbung', 'लिम्चुङ्बुङ', 14, 1, 5),
+(134, 'Tapli', 'ताप्ली', 14, 1, 5),
+(135, 'Triyuga', 'त्रियुगा', 14, 2, 16),
+(136, 'Udayapurgadhi', 'उदयपुरगढी', 14, 1, 8),
+(137, 'Adarshkotwal', 'आदर्श कोटवाल', 33, 1, 8),
+(138, 'Baragadhi', 'बारागढी', 33, 1, 6),
+(139, 'Bishrampur', 'विश्रामपुर', 33, 1, 5),
+(140, 'Devtal', 'देवताल', 33, 1, 7),
+(141, 'Jitpur Simara', 'जीतपुर सिमरा', 33, 3, 24),
+(142, 'Kalaiya', 'कलैया', 33, 3, 27),
+(143, 'Karaiyamai', 'करैयामाई', 33, 1, 8),
+(144, 'Kolhabi', 'कोल्हवी', 33, 2, 11),
+(145, 'Mahagadhimai', 'महागढीमाई', 33, 2, 11),
+(146, 'Nijgadh', 'निजगढ', 33, 2, 13),
+(147, 'Pacharauta', 'पचरौता', 33, 2, 9),
+(148, 'Parwanipur', 'परवानीपुर', 33, 1, 5),
+(149, 'Pheta', 'फेटा', 33, 1, 7),
+(150, 'Prasauni', 'प्रसौनी', 33, 1, 7),
+(151, 'Simraungadh', 'सिम्रौनगढ', 33, 2, 11),
+(152, 'Suwarna', 'सुवर्ण', 33, 1, 8),
+(153, 'Aaurahi', 'औरही', 17, 1, 6),
+(154, 'Bateshwor', 'बटेश्वर', 17, 1, 5),
+(155, 'Bideha', 'विदेह', 17, 2, 9),
+(156, 'Chhireshwornath', 'क्षिरेश्वरनाथ', 17, 2, 10),
+(157, 'Dhanauji', 'धनौजी', 17, 1, 5),
+(158, 'Dhanusadham', 'धनुषाधाम', 17, 2, 9),
+(159, 'Ganeshman Charnath', 'गणेशमान चारनाथ', 17, 2, 11),
+(160, 'Hansapur', 'हंसपुर', 17, 2, 9),
+(161, 'Janaknandani', 'जनकनन्दिनी', 17, 1, 6),
+(162, 'Janakpurdham', 'जनकपुरधाम', 17, 3, 25),
+(163, 'Kamala', 'कमला', 17, 2, 9),
+(164, 'Lakshminiya', 'लक्ष्मीनिया', 17, 1, 7),
+(165, 'Mithila', 'मिथिला', 17, 2, 11),
+(166, 'Mithila Bihari', 'मिथिला बिहारी', 17, 2, 10),
+(167, 'Mukhiyapatti Musarmiya', 'मुखियापट्टी मुसहरमिया', 17, 1, 6),
+(168, 'Nagarain', 'ाइन', 17, 2, 9),
+(169, 'Sabaila', 'सबैला', 17, 2, 13),
+(170, 'Sahidnagar', 'शहीद', 17, 2, 9),
+(171, 'Aurahi', 'औरही', 18, 2, 9),
+(172, 'Balwa', 'बलवा', 18, 2, 11),
+(173, 'Bardibas', 'बर्दिबास', 18, 2, 14),
+(174, 'Bhangaha', 'भँगाहा', 18, 2, 9),
+(175, 'Ekdanra', 'एकडारा', 18, 1, 6),
+(176, 'Gaushala', 'गौशाला', 18, 2, 12),
+(177, 'Jaleswor', 'जलेश्वर', 18, 2, 12),
+(178, 'Loharpatti', 'लोहरपट्टी', 18, 2, 9),
+(179, 'Mahottari', 'महोत्तरी', 18, 1, 6),
+(180, 'Manra Siswa', 'मनरा शिसवा', 18, 2, 10),
+(181, 'Matihani', 'मटिहानी', 18, 2, 9),
+(182, 'Pipra', 'पिपरा', 18, 1, 7),
+(183, 'Ramgopalpur', 'रामगोपालपुर', 18, 2, 9),
+(184, 'Samsi', 'साम्सी', 18, 1, 7),
+(185, 'Sonama', 'सोनमा', 18, 1, 8),
+(186, 'Bahudaramai', 'बहुदरमाई', 34, 2, 9),
+(187, 'Bindabasini', 'बिन्दबासिनी', 34, 1, 5),
+(188, 'Birgunj', 'बिरगंज', 34, 4, 32),
+(189, 'Chhipaharmai', 'छिपहरमाई', 34, 1, 5),
+(190, 'Dhobini', 'धोबीनी', 34, 1, 5),
+(191, 'Jagarnathpur', 'जगरनाथपुर', 34, 1, 6),
+(192, 'Jirabhawani', 'जिरा भवानी', 34, 1, 5),
+(193, 'Kalikamai', 'कालिकामाई', 34, 1, 5),
+(194, 'Pakahamainpur', 'पकाहा मैनपुर', 34, 1, 5),
+(195, 'Parsagadhi', 'पर्सागढी', 34, 2, 9),
+(196, 'Paterwasugauli', 'पटेर्वा सुगौली', 34, 1, 5),
+(197, 'Pokhariya', 'पोखरिया', 34, 2, 10),
+(198, 'SakhuwaPrasauni', 'सखुवा प्रसौनी', 34, 1, 6),
+(199, 'Thori', 'ठोरी', 34, 1, 5),
+(200, 'Baudhimai', 'बौधीमाई', 32, 2, 9),
+(201, 'Brindaban', 'बृन्दावन', 32, 2, 9),
+(202, 'Chandrapur', 'चन्द्रपुर', 32, 2, 10),
+(203, 'Dewahhi Gonahi', 'देवाही गोनाही', 32, 2, 9),
+(204, 'Durga Bhagwati', 'दुर्गा भगवती', 32, 1, 5),
+(205, 'Gadhimai', 'गढीमाई', 32, 2, 9),
+(206, 'Garuda', 'गरुडा', 32, 2, 9),
+(207, 'Gaur', 'गौर', 32, 2, 9),
+(208, 'Gujara', 'गुजरा', 32, 2, 9),
+(209, 'Ishanath', 'ईशनाथ', 32, 2, 9),
+(210, 'Katahariya', 'कटहरिया', 32, 2, 9),
+(211, 'Madhav Narayan', 'माधव नारायण', 32, 2, 9),
+(212, 'Maulapur', 'मौलापुर', 32, 2, 9),
+(213, 'Paroha', 'परोहा', 32, 2, 9),
+(214, 'Phatuwa Bijayapur', 'फतुवाबिजयपुर', 32, 2, 11),
+(215, 'Rajdevi', 'राजदेवी', 32, 2, 9),
+(216, 'Rajpur', 'राजपुर', 32, 2, 9),
+(217, 'Yemunamai', 'यमुनामाई', 32, 1, 5),
+(218, 'Agnisair Krishna Savaran', 'अग्निसाइर कृष्णासरवन', 15, 1, 6),
+(219, 'Balan Bihul', 'बलान-बिहुल', 15, 1, 6),
+(220, 'Rajgadh', 'राजगढ', 15, 1, 6),
+(221, 'Bishnupur', 'बिष्णुपुर', 15, 1, 7),
+(222, 'Bode Barsain', 'बोदेबरसाईन', 15, 2, 10),
+(223, 'Chhinnamasta', 'छिन्नमस्ता', 15, 1, 7),
+(224, 'Dakneshwori', 'डाक्नेश्वरी', 15, 2, 10),
+(225, 'Hanumannagar Kankalini', 'हनुमान कङ्‌कालिनी', 15, 2, 14),
+(226, 'Kanchanrup', 'कञ्चनरुप', 15, 2, 12),
+(227, 'Khadak', 'खडक', 15, 2, 11),
+(228, 'Mahadeva', 'महादेवा', 15, 1, 6),
+(229, 'Rajbiraj', 'राजविराज', 15, 2, 16),
+(230, 'Rupani', 'रुपनी', 15, 1, 6),
+(231, 'Saptakoshi', 'सप्तकोशी', 15, 1, 11),
+(232, 'Shambhunath', 'शम्भुनाथ', 15, 2, 12),
+(233, 'Surunga', 'सुरुङ्‍गा', 15, 2, 11),
+(234, 'Tilathi Koiladi', 'तिलाठी कोईलाडी', 15, 1, 8),
+(235, 'Tirahut', 'तिरहुत', 15, 1, 5),
+(236, 'Arnama', 'अर्नमा', 16, 1, 5),
+(237, 'Aurahi', 'औरही', 16, 1, 5),
+(238, 'Bariyarpatti', 'बरियारपट्टी', 16, 1, 5),
+(239, 'Bhagawanpur', 'भगवानपुर', 16, 1, 5),
+(240, 'Bishnupur', 'विष्णुपुर', 16, 1, 5),
+(241, 'Dhangadhimai', 'धनगढीमाई', 16, 2, 14),
+(242, 'Golbazar', 'गोलबजार', 16, 2, 13),
+(243, 'Kalyanpur', 'कल्याणपुर', 16, 2, 12),
+(244, 'Karjanha', 'कर्जन्हा', 16, 2, 11),
+(245, 'Lahan', 'लहान', 16, 2, 24),
+(246, 'Laxmipur Patari', 'लक्ष्मीपुर पतारी', 16, 1, 6),
+(247, 'Mirchaiya', 'मिर्चैयाँ', 16, 2, 12),
+(248, 'Naraha', 'नरहा', 16, 1, 5),
+(249, 'Nawarajpur', 'नवराजपुर', 16, 1, 5),
+(250, 'Sakhuwanankarkatti', 'सखुवानान्कारकट्टी', 16, 1, 5),
+(251, 'Siraha', 'सिरहा', 16, 2, 22),
+(252, 'Sukhipur', 'सुखीपुर', 16, 2, 10),
+(253, 'Bagmati', 'बागमती', 19, 2, 12),
+(254, 'Balara', 'बलरा', 19, 2, 11),
+(255, 'Barahathawa', 'बरहथवा', 19, 2, 18),
+(256, 'Basbariya', 'बसबरीया', 19, 1, 6),
+(257, 'Bishnu', 'विष्णु', 19, 1, 8),
+(258, 'Bramhapuri', 'ब्रह्मपुरी', 19, 1, 7),
+(259, 'Chakraghatta', 'चक्रघट्टा', 19, 1, 9),
+(260, 'Chandranagar', 'चन्द्र', 19, 1, 7),
+(261, 'Dhankaul', 'धनकौल', 19, 1, 7),
+(262, 'Godaita', 'गोडैटा', 19, 2, 12),
+(263, 'Haripur', 'हरिपुर', 19, 2, 9),
+(264, 'Haripurwa', 'हरिपुर्वा', 19, 2, 9),
+(265, 'Hariwan', 'हरिवन', 19, 2, 11),
+(266, 'Ishworpur', 'ईश्वरपुर', 19, 2, 15),
+(267, 'Kabilasi', 'कविलासी', 19, 2, 10),
+(268, 'Kaudena', 'कौडेना', 19, 1, 7),
+(269, 'Lalbandi', 'लालबन्दी', 19, 2, 17),
+(270, 'Malangawa', 'मलंगवा', 19, 2, 12),
+(271, 'Parsa', 'पर्सा', 19, 1, 6),
+(272, 'Ramnagar', 'राम', 19, 1, 7),
+(273, 'Balefi', 'बलेफी', 23, 1, 8),
+(274, 'Barhabise', 'बाह्रविसे', 23, 2, 9),
+(275, 'Bhotekoshi', 'भोटेकोशी', 23, 1, 5),
+(276, 'Chautara SangachokGadhi', 'चौतारा साँगाचोकगढी', 23, 2, 14),
+(277, 'Helambu', 'हेलम्बु', 23, 1, 7),
+(278, 'Indrawati', 'ईन्द्रावती', 23, 1, 12),
+(279, 'Jugal', 'जुगल', 23, 1, 7),
+(280, 'Lisangkhu Pakhar', 'लिसङ्खु पाखर', 23, 1, 7),
+(281, 'Melamchi', 'मेलम्ची', 23, 2, 13),
+(282, 'Panchpokhari Thangpal', 'पाँचपोखरी थाङपाल', 23, 1, 8),
+(283, 'Sunkoshi', 'सुनकोशी', 23, 1, 7),
+(284, 'Tripurasundari', 'त्रिपुरासुन्दरी', 23, 1, 6),
+(285, 'Banepa', 'बनेपा', 24, 2, 14),
+(286, 'Bethanchowk', 'बेथानचोक', 24, 1, 6),
+(287, 'Bhumlu', 'भुम्लु', 24, 1, 10),
+(288, 'Chaurideurali', 'चौंरीदेउराली', 24, 1, 9),
+(289, 'Dhulikhel', 'धुलिखेल', 24, 2, 12),
+(290, 'Khanikhola', 'खानीखोला', 24, 1, 7),
+(291, 'Mahabharat', 'महाभारत गाँउ', 24, 1, 8),
+(292, 'Mandandeupur', 'मण्डनदेउपुर', 24, 2, 12),
+(293, 'Namobuddha', 'नमोबुद्ध', 24, 2, 11),
+(294, 'Panauti', 'पनौती', 24, 2, 12),
+(295, 'Panchkhal', 'पाँचखाल', 24, 2, 13),
+(296, 'Roshi', 'रोशी', 24, 1, 12),
+(297, 'Temal', 'तेमाल', 24, 1, 9),
+(298, 'Bagmati', 'बागमती', 25, 1, 7),
+(299, 'Godawari', 'गोदावरी', 25, 2, 14),
+(300, 'Konjyosom', 'कोन्ज्योसोम', 25, 1, 5),
+(301, 'Lalitpur', 'ललितपुर', 25, 4, 29),
+(302, 'Mahalaxmi', 'महालक्ष्मी', 25, 2, 10),
+(303, 'Mahankal', 'महाङ्काल', 25, 1, 6),
+(304, 'Bhaktapur', 'भक्तपुर', 26, 2, 10),
+(305, 'Changunarayan', 'चाँगुनारायण', 26, 2, 9),
+(306, 'Madhyapur Thimi', 'मध्यपुर थिमी', 26, 2, 9),
+(307, 'Suryabinayak', 'सूर्यविनायक', 26, 2, 10),
+(308, 'Budhanilakantha', 'बुढानिलकण्ठ', 27, 2, 13),
+(309, 'Chandragiri', 'चन्द्रागिरी', 27, 2, 15),
+(310, 'Dakshinkali', 'दक्षिणकाली', 27, 2, 9),
+(311, 'Gokarneshwor', 'गोकर्णेश्वर', 27, 2, 9),
+(312, 'Kageshwori Manahora', 'कागेश्वरी मनोहरा', 27, 2, 9),
+(313, 'Kathmandu', 'काठमाण्डौं', 27, 4, 32),
+(314, 'Kirtipur', 'कीर्तिपुर', 27, 2, 10),
+(315, 'Nagarjun', 'नागार्जुन', 27, 2, 10),
+(316, 'Shankharapur', 'शङ्खरापुर', 27, 2, 9),
+(317, 'Tarakeshwor', 'तारकेश्वर', 27, 2, 11),
+(318, 'Tokha', 'टोखा', 27, 2, 11),
+(319, 'Belkotgadhi', 'बेलकोटगढी', 28, 2, 13),
+(320, 'Bidur', 'विदुर', 28, 2, 13),
+(321, 'Dupcheshwar', 'दुप्चेश्वर', 28, 1, 7),
+(322, 'Kakani', 'ककनी', 28, 1, 8),
+(323, 'Kispang', 'किस्पाङ', 28, 1, 5),
+(324, 'Likhu', 'लिखु', 28, 1, 6),
+(325, 'Myagang', 'म्यगङ', 28, 1, 6),
+(326, 'Panchakanya', 'पञ्चकन्या', 28, 1, 5),
+(327, 'Shivapuri', 'शिवपुरी', 28, 1, 8),
+(328, 'Suryagadhi', 'सुर्यगढी', 28, 1, 5),
+(329, 'Tadi', 'तादी', 28, 1, 6),
+(330, 'Tarkeshwar', 'तारकेश्वर', 28, 1, 6),
+(331, 'Gosaikunda', 'गोसाईकुण्ड', 29, 1, 6),
+(332, 'Kalika', 'कालिका', 29, 1, 5),
+(333, 'Naukunda', 'नौकुण्ड', 29, 1, 6),
+(334, 'Aamachhodingmo', 'आमाछोदिङमो', 29, 1, 5),
+(335, 'Uttargaya', 'उत्तरगया', 29, 1, 5),
+(336, 'Benighat Rorang', 'बेनीघाट रोराङ्ग', 30, 1, 10),
+(337, 'Dhunibesi', 'धुनीबेंशी', 30, 2, 9),
+(338, 'Gajuri', 'गजुरी', 30, 1, 8),
+(339, 'Galchi', 'गल्छी', 30, 1, 8),
+(340, 'Gangajamuna', 'गङ्गाजमुना', 30, 1, 7),
+(341, 'Jwalamukhi', 'ज्वालामूखी', 30, 1, 7),
+(342, 'Khaniyabash', 'खनियाबास', 30, 1, 5),
+(343, 'Netrawati Dabjong', 'नेत्रावती डबजोङ', 30, 1, 5),
+(344, 'Nilakantha', 'निलकण्ठ', 30, 2, 14),
+(345, 'Rubi Valley', 'रुवी भ्याली', 30, 1, 6),
+(346, 'Siddhalek', 'सिद्धलेक', 30, 1, 7),
+(347, 'Thakre', 'थाक्रे', 30, 1, 11),
+(348, 'Tripura Sundari', 'त्रिपुरासुन्दरी', 30, 1, 7),
+(349, 'Dudhouli', 'दुधौली', 20, 2, 14),
+(350, 'Ghanglekh', 'घ्याङलेख', 20, 1, 5),
+(351, 'Golanjor', 'गोलन्जर', 20, 1, 7),
+(352, 'Hariharpurgadhi', 'हरिहरपुरगढी', 20, 1, 8),
+(353, 'Kamalamai', 'कमलामाई', 20, 2, 14),
+(354, 'Marin', 'मरिण', 20, 1, 7),
+(355, 'Phikkal', 'फिक्कल', 20, 1, 6),
+(356, 'Sunkoshi', 'सुनकोशी', 20, 1, 7),
+(357, 'Tinpatan', 'तीनपाटन', 20, 1, 11),
+(358, 'Doramba Shailung', 'दोरम्बा शैंलुङ', 21, 1, 7),
+(359, 'Gokulganga', 'गोकुलगङ्गा', 21, 1, 6),
+(360, 'Khadadevi', 'खाँडादेवी', 21, 1, 9),
+(361, 'Likhu Tamakoshi', 'लिखु तामाकोशी', 21, 1, 7),
+(362, 'Manthali', 'मन्थली', 21, 2, 14),
+(363, 'Ramechhap', 'रामेछाप', 21, 2, 9),
+(364, 'Sunapati', 'सुनापती', 21, 1, 5),
+(365, 'Umakunda', 'उमाकुण्ड', 21, 1, 7),
+(366, 'Baiteshwor', 'वैतेश्वर', 22, 1, 8),
+(367, 'Bhimeshwor', 'भिमेश्वर', 22, 2, 9),
+(368, 'Bigu', 'विगु', 22, 1, 8),
+(369, 'Gaurishankar', 'गौरीशङ्कर', 22, 1, 9),
+(370, 'Jiri', 'जिरी', 22, 2, 9),
+(371, 'Kalinchok', 'कालिन्चोक', 22, 1, 9),
+(372, 'Melung', 'मेलुङ्ग', 22, 1, 7),
+(373, 'Sailung', 'शैलुङ्ग', 22, 1, 8),
+(374, 'Tamakoshi', 'तामाकोशी', 22, 1, 7),
+(375, 'Bagmati', 'बाग्मति', 31, 1, 9),
+(376, 'Bakaiya', 'बकैया', 31, 1, 12),
+(377, 'Bhimphedi', 'भिमफेदी', 31, 1, 9),
+(378, 'Hetauda', 'हेटौडा', 31, 3, 19),
+(379, 'Indrasarowar', 'इन्द्रसरोबर', 31, 1, 5),
+(380, 'Kailash', 'कैलाश', 31, 1, 10),
+(381, 'Makawanpurgadhi', 'मकवानपुरगढी', 31, 1, 8),
+(382, 'Manahari', 'मनहरी', 31, 1, 9),
+(383, 'Raksirang', 'राक्सिराङ्ग', 31, 1, 9),
+(384, 'Thaha', 'थाहा', 31, 2, 12),
+(385, 'Bharatpur', 'भरतपुर', 35, 4, 29),
+(386, 'Ichchhyakamana', 'इच्छाकामना', 35, 1, 7),
+(387, 'Kalika', 'कालिका', 35, 2, 11),
+(388, 'Khairahani', 'खैरहनी', 35, 2, 13),
+(389, 'Madi', 'माडी', 35, 2, 9),
+(390, 'Rapti', 'राप्ती', 35, 2, 13),
+(391, 'Ratnanagar', 'रत्न', 35, 2, 16),
+(392, 'Badigad', 'वडिगाड', 45, 1, 10),
+(393, 'Baglung', 'बागलुङ', 45, 2, 14),
+(394, 'Bareng', 'वरेङ', 45, 1, 5),
+(395, 'Dhorpatan', 'ढोरपाटन', 45, 2, 9),
+(396, 'Galkot', 'गल्कोट', 45, 2, 11),
+(397, 'Jaimuni', 'जैमूनी', 45, 2, 10),
+(398, 'Kanthekhola', 'काठेखोला', 45, 1, 8),
+(399, 'Nisikhola', 'निसीखोला', 45, 1, 7),
+(400, 'Taman Khola', 'तमानखोला', 45, 1, 6),
+(401, 'Tara Khola', 'ताराखोला', 45, 1, 5),
+(402, 'Aarughat', 'आरूघाट', 36, 1, 10),
+(403, 'Ajirkot', 'अजिरकोट', 36, 1, 5),
+(404, 'Bhimsenthapa', 'भिमसेनथापा', 36, 1, 8),
+(405, 'Chum Nubri', 'चुमनुव्री', 36, 1, 7),
+(406, 'Dharche', 'धार्चे', 36, 1, 7),
+(407, 'Gandaki', 'गण्डकी', 36, 1, 8),
+(408, 'Gorkha', 'गोरखा', 36, 2, 14),
+(409, 'Palungtar', 'पालुङटार', 36, 2, 10),
+(410, 'Sahid Lakhan', 'शहिद लखन', 36, 1, 9),
+(411, 'Siranchok', 'सिरानचोक', 36, 1, 8),
+(412, 'Barpak Sulikot', 'बारपाक सुलिकोट', 36, 1, 8),
+(413, 'Annapurna', 'अन्नपूर्ण', 40, 1, 11),
+(414, 'Machhapuchchhre', 'माछापुच्छ्रे', 40, 1, 9),
+(415, 'Madi', 'मादी', 40, 1, 12),
+(416, 'Pokhara', 'पोखरा', 40, 4, 33),
+(417, 'Rupa', 'रूपा', 40, 1, 7),
+(418, 'Besishahar', 'बेसीशहर', 37, 2, 11),
+(419, 'Dordi', 'दोर्दी', 37, 1, 9),
+(420, 'Dudhpokhari', 'दूधपोखरी', 37, 1, 6),
+(421, 'Kwholasothar', 'क्व्होलासोथार', 37, 1, 9),
+(422, 'MadhyaNepal', 'मध्यनेपाल', 37, 2, 10),
+(423, 'Marsyangdi', 'मर्स्याङदी', 37, 1, 9),
+(424, 'Rainas', 'रार्इनास', 37, 2, 10),
+(425, 'Sundarbazar', 'सुन्दरबजार', 37, 2, 11),
+(426, 'Chame', 'चामे', 41, 1, 5),
+(427, 'Narpa Bhumi', 'नार्पा भूमि', 41, 1, 5),
+(428, 'Nason', 'नासोँ', 41, 1, 9),
+(429, 'Manang Ngisyang', 'मनाङ ङिस्याङ', 41, 1, 9),
+(430, 'Dalome', 'लो-घेकर दामोदरकुण्ड', 42, 1, 5),
+(431, 'Varagung Muktichhetra', 'वारागुङ मुक्तिक्षेत्र', 42, 1, 5),
+(432, 'Gharapjhong', 'घरपझोङ', 42, 1, 5),
+(433, 'Lomanthang', 'लोमन्थाङ', 42, 1, 5),
+(434, 'Thasang', 'थासाङ', 42, 1, 5),
+(435, 'Chharka Tangsong', 'छार्का ताङसोङ', 62, 1, 6),
+(436, 'Annapurna', 'अन्नपुर्ण', 43, 1, 8),
+(437, 'Beni', 'बेनी', 43, 2, 10),
+(438, 'Dhaulagiri', 'धवलागिरी', 43, 1, 7),
+(439, 'Malika', 'मालिका', 43, 1, 7),
+(440, 'Mangala', 'मंगला', 43, 1, 5),
+(441, 'Raghuganga', 'रघुगंगा', 43, 1, 8),
+(442, 'Bihadi', 'विहादी', 44, 1, 6),
+(443, 'Jaljala', 'जलजला', 44, 1, 9),
+(444, 'Kushma', 'कुश्मा', 44, 2, 14),
+(445, 'Mahashila', 'महाशिला', 44, 1, 6),
+(446, 'Modi', 'मोदी', 44, 1, 8),
+(447, 'Painyu', 'पैयूं', 44, 1, 7),
+(448, 'Phalebas', 'फलेवास', 44, 2, 11),
+(449, 'Aandhikhola', 'आँधिखोला', 39, 1, 6),
+(450, 'Arjunchaupari', 'अर्जुनचौपारी', 39, 1, 6),
+(451, 'Bhirkot', 'भीरकोट', 39, 2, 9),
+(452, 'Biruwa', 'बिरुवा', 39, 1, 8),
+(453, 'Chapakot', 'चापाकोट', 39, 2, 10),
+(454, 'Galyang', 'गल्याङ', 39, 2, 11),
+(455, 'Harinas', 'हरिनास', 39, 1, 7),
+(456, 'Kaligandagi', 'कालीगण्डकी', 39, 1, 7),
+(457, 'Phedikhola', 'फेदीखोला', 39, 1, 5),
+(458, 'Putalibazar', 'पुतलीबजार', 39, 2, 14),
+(459, 'Waling', 'वालिङ', 39, 2, 14),
+(460, 'Anbukhaireni', 'आँबुखैरेनी', 38, 1, 6),
+(461, 'Bandipur', 'वन्दिपुर', 38, 1, 6),
+(462, 'Bhanu', 'भानु', 38, 2, 13),
+(463, 'Bhimad', 'भिमाद', 38, 2, 9),
+(464, 'Vyas', 'व्यास', 38, 2, 14),
+(465, 'Devghat', 'देवघाट', 38, 1, 5),
+(466, 'Ghiring', 'घिरिङ', 38, 1, 5),
+(467, 'Myagde', 'म्याग्दे', 38, 1, 7),
+(468, 'Rhishing', 'ऋषिङ्ग', 38, 1, 8),
+(469, 'Shuklagandaki', 'शुक्लागण्डकी', 38, 2, 12),
+(470, 'Binayee Tribeni', 'विनयी त्रिवेणी', 481, 1, 7),
+(471, 'Bulingtar', 'बुलिङटार', 481, 1, 6),
+(472, 'Baudikali', 'बौदीकाली', 481, 1, 6),
+(473, 'Devchuli', 'देवचुली', 481, 2, 17),
+(474, 'Gaindakot', 'गैडाकोट', 481, 2, 18),
+(475, 'Hupsekot', 'हुप्सेकोट', 481, 1, 6),
+(476, 'Kawasoti', 'कावासोती', 481, 2, 17),
+(477, 'Madhyabindu', 'मध्यविन्दु', 481, 2, 15),
+(478, 'Bhumekasthan', 'भूमिकास्थान', 51, 2, 10),
+(479, 'Chhatradev', 'छत्रदेव', 51, 1, 8),
+(480, 'Malarani', 'मालारानी', 51, 1, 9),
+(481, 'Panini', 'पाणिनी', 51, 1, 8),
+(482, 'Sandhikharka', 'सन्धिखर्क', 51, 2, 12),
+(483, 'Sitganga', 'शितगंगा', 51, 2, 14),
+(484, 'Baijanath', 'बैजनाथ', 57, 1, 8),
+(485, 'Duduwa', 'डुडुवा', 57, 1, 6),
+(486, 'Janki', 'जानकी', 57, 1, 6),
+(487, 'Khajura', 'खजुरा', 57, 1, 8),
+(488, 'Kohalpur', 'कोहलपुर', 57, 2, 15),
+(489, 'Narainapur', 'नरैनापुर', 57, 1, 6),
+(490, 'Nepalgunj', 'नेपालगंज', 57, 3, 23),
+(491, 'Rapti Sonari', 'राप्ती सोनारी', 57, 1, 9),
+(492, 'Gulariya', 'गुलरिया', 58, 2, 12),
+(493, 'Madhuwan', 'मधुवन', 58, 2, 9),
+(494, 'Rajapur', 'राजापुर', 58, 2, 10),
+(495, 'Thakurbaba', 'ठाकुरबाबा', 58, 2, 9),
+(496, 'Geruwa', 'गेरुवा', 58, 1, 6),
+(497, 'Barbardiya', 'बारबर्दिया', 58, 2, 11),
+(498, 'Badhaiyatal', 'बढैयाताल', 58, 1, 9),
+(499, 'Bansagadhi', 'बाँसगढी', 58, 2, 9),
+(500, 'Babai', 'बबई', 56, 1, 7),
+(501, 'Banglachuli', 'बंगलाचुली', 56, 1, 8),
+(502, 'Dangisharan', 'दंगीशरण', 56, 1, 7),
+(503, 'Gadhawa', 'गढवा', 56, 1, 8),
+(504, 'Ghorahi', 'घोराही', 56, 3, 19),
+(505, 'Lamahi', 'लमही', 56, 2, 9),
+(506, 'Rajpur', 'राजपुर', 56, 1, 7),
+(507, 'Rapti', 'राप्ती', 56, 1, 9),
+(508, 'Shantinagar', 'शान्ति', 56, 1, 7),
+(509, 'Tulsipur', 'तुल्सीपुर', 56, 3, 19),
+(510, 'Chandrakot', 'चन्द्रकोट', 46, 1, 8),
+(511, 'Chatrakot', 'छत्रकोट', 46, 1, 6),
+(512, 'Dhurkot', 'धुर्कोट', 46, 1, 7),
+(513, 'Gulmidarbar', 'गुल्मी दरबार', 46, 1, 7),
+(514, 'Isma', 'ईस्मा', 46, 1, 6),
+(515, 'Kaligandaki', 'कालीगण्डकी', 46, 1, 7),
+(516, 'Madane', 'मदाने', 46, 1, 7),
+(517, 'Malika', 'मालिका', 46, 1, 8),
+(518, 'Musikot', 'मुसिकोट', 46, 2, 9),
+(519, 'Resunga', 'रेसुङ्गा', 46, 2, 14),
+(520, 'Rurukshetra', 'रुरुक्षेत्र', 46, 1, 6),
+(521, 'Satyawati', 'सत्यवती', 46, 1, 8),
+(522, 'Banganga', 'बाणगंगा', 50, 2, 11),
+(523, 'Bijayanagar', 'विजय', 50, 1, 7),
+(524, 'Buddhabhumi', 'बुद्धभुमी', 50, 2, 10),
+(525, 'Kapilbastu', 'कपिलवस्तु', 50, 2, 12),
+(526, 'Krishnanagar', 'कृष्ण', 50, 2, 12),
+(527, 'Maharajgunj', 'महाराजगंज', 50, 2, 11),
+(528, 'Mayadevi', 'मायादेवी', 50, 1, 8),
+(529, 'Shivaraj', 'शिवराज', 50, 2, 11),
+(530, 'Suddhodhan', 'सुद्धोधन', 50, 1, 6),
+(531, 'Yashodhara', 'यसोधरा', 50, 1, 8),
+(532, 'Bagnaskali', 'बगनासकाली', 47, 1, 9),
+(533, 'Mathagadhi', 'माथागढी', 47, 1, 8),
+(534, 'Nisdi', 'निस्दी', 47, 1, 7),
+(535, 'Purbakhola', 'पूर्वखोला', 47, 1, 6),
+(536, 'Rainadevi Chhahara', 'रैनादेवी छहरा', 47, 1, 8),
+(537, 'Rambha', 'रम्भा', 47, 1, 5),
+(538, 'Rampur', 'रामपुर', 47, 2, 10),
+(539, 'Ribdikot', 'रिब्दिकोट', 47, 1, 8),
+(540, 'Tansen', 'तानसेन', 47, 2, 14),
+(541, 'Tinau', 'तिनाउ', 47, 1, 6),
+(542, 'Ayirabati', 'ऐरावती', 52, 1, 6),
+(543, 'Gaumukhi', 'गौमुखी', 52, 1, 7),
+(544, 'Jhimruk', 'झिमरुक', 52, 1, 8),
+(545, 'Mallarani', 'मल्लरानी', 52, 1, 5),
+(546, 'Mandavi', 'माण्डवी', 52, 1, 5),
+(547, 'Naubahini', 'नौवहिनी', 52, 1, 8),
+(548, 'Pyuthan', 'प्यूठान', 52, 2, 10),
+(549, 'Sarumarani', 'सरुमारानी', 52, 1, 6),
+(550, 'Sworgadwary', 'स्वर्गद्वारी', 52, 2, 9),
+(551, 'Pariwartan', 'परिवर्तन', 53, 1, 6),
+(552, 'Lungri', 'लुङग्री', 53, 1, 7),
+(553, 'Madi', 'माडी', 53, 1, 6),
+(554, 'Rolpa', 'रोल्पा', 53, 2, 10),
+(555, 'Runtigadi', 'रुन्टीगढी', 53, 1, 9),
+(556, 'Gangadev', 'गंगादेव', 53, 1, 7),
+(557, 'Sunchhahari', 'सुनछहरी', 53, 1, 7),
+(558, 'Sunil Smriti', 'सुनिल स्मृति', 53, 1, 8),
+(559, 'Thawang', 'थवाङ', 53, 1, 5),
+(560, 'Tribeni', 'त्रिवेणी', 53, 1, 7),
+(561, 'Butwal', 'बुटवल', 49, 3, 19),
+(562, 'Devdaha', 'देवदह', 49, 2, 12),
+(563, 'Gaidahawa', 'गैडहवा', 49, 1, 9),
+(564, 'Kanchan', 'कन्चन', 49, 1, 5),
+(565, 'Kotahimai', 'कोटहीमाई', 49, 1, 7),
+(566, 'Lumbini Sanskritik', 'लुम्बिनी सांस्कृतिक', 49, 2, 13),
+(567, 'Marchawari', 'मर्चवारी', 49, 1, 7),
+(568, 'Mayadevi', 'मायादेवी', 49, 1, 8),
+(569, 'Omsatiya', 'ओमसतिया', 49, 1, 6),
+(570, 'Rohini', 'रोहिणी', 49, 1, 7),
+(571, 'Sainamaina', 'सैनामैना', 49, 2, 11),
+(572, 'Sammarimai', 'सम्मरीमाई', 49, 1, 7),
+(573, 'Siddharthanagar', 'सिद्धार्थ', 49, 2, 13),
+(574, 'Siyari', 'सियारी', 49, 1, 7),
+(575, 'Sudhdhodhan', 'शुद्धोधन', 49, 1, 7),
+(576, 'Tillotama', 'तिलोत्तमा', 49, 2, 17),
+(577, 'Bhume', 'भूमे', 541, 1, 9),
+(578, 'Putha Uttarganga', 'पुथा उत्तरगंगा', 541, 1, 14),
+(579, 'Sisne', 'सिस्ने', 541, 1, 8),
+(580, 'Bardaghat', 'बर्दघाट', 482, 2, 16),
+(581, 'Palhi Nandan', 'पाल्हीनन्दन', 482, 1, 6),
+(582, 'Pratappur', 'प्रतापपुर', 482, 1, 9),
+(583, 'Ramgram', 'रामग्राम', 482, 2, 18),
+(584, 'Sarawal', 'सरावल', 482, 1, 7),
+(585, 'Sunwal', 'सुनवल', 482, 2, 13),
+(586, 'Susta', 'सुस्ता', 482, 1, 5),
+(587, 'Aathabis', 'आठबीस', 60, 2, 9),
+(588, 'Bhagawatimai', 'भगवतीमाई', 60, 1, 7),
+(589, 'Bhairabi', 'भैरवी', 60, 1, 7),
+(590, 'Chamunda Bindrasaini', 'चामुण्डा विन्द्रासैनी', 60, 2, 9),
+(591, 'Dullu', 'दुल्लु', 60, 2, 13),
+(592, 'Dungeshwor', 'डुंगेश्वर', 60, 1, 6),
+(593, 'Gurans', 'गुराँस', 60, 1, 8),
+(594, 'Mahabu', 'महावु', 60, 1, 6),
+(595, 'Narayan', 'नारायण', 60, 2, 11),
+(596, 'Naumule', 'नौमुले', 60, 1, 8),
+(597, 'Thantikandh', 'ठाँटीकाँध', 60, 1, 6),
+(598, 'Dolpo Buddha', 'डोल्पो बुद्ध', 62, 1, 6),
+(599, 'Jagadulla', 'जगदुल्ला', 62, 1, 6),
+(600, 'Kaike', 'काईके', 62, 1, 7),
+(601, 'Mudkechula', 'मुड्केचुला', 62, 1, 9),
+(602, 'Shey Phoksundo', 'शे फोक्सुन्डो', 62, 1, 9),
+(603, 'Thuli Bheri', 'ठूली भेरी', 62, 2, 11),
+(604, 'Tripurasundari', 'त्रिपुरासुन्दरी', 62, 2, 11),
+(605, 'Adanchuli', 'अदानचुली', 66, 1, 6),
+(606, 'Chankheli', 'चंखेली', 66, 1, 6),
+(607, 'Kharpunath', 'खार्पुनाथ', 66, 1, 5),
+(608, 'Namkha', 'नाम्खा', 66, 1, 6),
+(609, 'Sarkegad', 'सर्केगाड', 66, 1, 8),
+(610, 'Simkot', 'सिमकोट', 66, 1, 8),
+(611, 'Tanjakot', 'ताँजाकोट', 66, 1, 5),
+(612, 'Barekot', 'बारेकोट', 61, 1, 9),
+(613, 'Bheri', 'भेरी', 61, 2, 13),
+(614, 'Chhedagad', 'छेडागाड', 61, 2, 13),
+(615, 'Junichande', 'जुनीचाँदे', 61, 1, 11),
+(616, 'Kuse', 'कुसे', 61, 1, 9),
+(617, 'Shiwalaya', 'शिवालय', 61, 1, 9),
+(618, 'Nalgad', 'नलगाड', 61, 2, 13),
+(619, 'Chandannath', 'चन्दननाथ', 63, 2, 10),
+(620, 'Guthichaur', 'गुठिचौर', 63, 1, 5),
+(621, 'Hima', 'हिमा', 63, 1, 7),
+(622, 'Kanakasundari', 'कनकासुन्दरी', 63, 1, 8),
+(623, 'Patrasi', 'पातारासी', 63, 1, 7),
+(624, 'Sinja', 'सिंजा', 63, 1, 6),
+(625, 'Tatopani', 'तातोपानी', 63, 1, 8),
+(626, 'Tila', 'तिला', 63, 1, 9),
+(627, 'Shuva Kalika', 'शुभ कालीका', 64, 1, 8),
+(628, 'Khandachakra', 'खाँडाचक्र', 64, 2, 11),
+(629, 'Mahawai', 'महावै', 64, 1, 7),
+(630, 'Naraharinath', 'नरहरिनाथ', 64, 1, 9),
+(631, 'Pachaljharana', 'पचालझरना', 64, 1, 9),
+(632, 'Palata', 'पलाता', 64, 1, 9),
+(633, 'Raskot', 'रास्कोट', 64, 2, 9),
+(634, 'Sanni Tribeni', 'सान्नी त्रिवेणी', 64, 1, 9),
+(635, 'Tilagufa', 'तिलागुफा', 64, 2, 11),
+(636, 'Chhayanath Rara', 'छायाँनाथ रारा', 65, 2, 14),
+(637, 'Khatyad', 'खत्याड', 65, 1, 11),
+(638, 'Mugum Karmarong', 'मुगुम कार्मारोंग', 65, 1, 9),
+(639, 'Soru', 'सोरु', 65, 1, 11),
+(640, 'Bagchaur', 'बागचौर', 55, 2, 12),
+(641, 'Bangad Kupinde', 'बनगाड कुपिण्डे', 55, 2, 12),
+(642, 'Chhatreshwori', 'छत्रेश्वरी', 55, 1, 7),
+(643, 'Darma', 'दार्मा', 55, 1, 6),
+(644, 'Siddha Kumakh', 'सिद्ध कुमाख', 55, 1, 5),
+(645, 'Kalimati', 'कालिमाटी', 55, 1, 7),
+(646, 'Kapurkot', 'कपुरकोट', 55, 1, 6),
+(647, 'Kumakh', 'कुमाख', 55, 1, 7),
+(648, 'Sharada', 'शारदा', 55, 2, 15),
+(649, 'Tribeni', 'त्रिवेणी', 55, 1, 6),
+(650, 'Barahtal', 'बराहताल', 59, 1, 10),
+(651, 'Bheriganga', 'भेरीगंगा', 59, 2, 13),
+(652, 'Birendranagar', 'बीरेन्द्र', 59, 2, 16),
+(653, 'Chaukune', 'चौकुने', 59, 1, 10),
+(654, 'Chingad', 'चिङ्गाड', 59, 1, 6),
+(655, 'Gurbhakot', 'गुर्भाकोट', 59, 2, 14),
+(656, 'Lekbeshi', 'लेकवेशी', 59, 2, 10),
+(657, 'Panchpuri', 'पञ्चपुरी', 59, 2, 11),
+(658, 'Simta', 'सिम्ता', 59, 1, 9),
+(659, 'Aathbiskot', 'आठबिसकोट', 542, 2, 14),
+(660, 'Banfikot', 'बाँफिकोट', 542, 1, 10),
+(661, 'Chaurjahari', 'चौरजहारी', 542, 2, 14),
+(662, 'Musikot', 'मुसिकोट', 542, 2, 14),
+(663, 'Sani Bheri', 'सानी भेरी', 542, 1, 11),
+(664, 'Tribeni', 'त्रिवेणी', 542, 1, 10),
+(665, 'Bannigadhi Jayagadh', 'बान्निगढी जयगढ', 69, 1, 6),
+(666, 'Chaurpati', 'चौरपाटी', 69, 1, 7),
+(667, 'Dhakari', 'ढकारी', 69, 1, 8),
+(668, 'Kamalbazar', 'कमलबजार', 69, 2, 10),
+(669, 'Mangalsen', 'मंगलसेन', 69, 2, 14),
+(670, 'Mellekh', 'मेल्लेख', 69, 1, 8),
+(671, 'Panchadewal Binayak', 'पन्चदेवल विनायक', 69, 2, 9),
+(672, 'Ramaroshan', 'रामारोशन', 69, 1, 7),
+(673, 'Sanphebagar', 'साँफेबगर', 69, 2, 14),
+(674, 'Turmakhad', 'तुर्माखाँद', 69, 1, 8),
+(675, 'Dasharathchanda', 'दशरथचन्द', 74, 2, 11),
+(676, 'Dilasaini', 'डीलासैनी', 74, 1, 7),
+(677, 'Dogadakedar', 'दोगडाकेदार', 74, 1, 8),
+(678, 'Melauli', 'मेलौली', 74, 2, 9),
+(679, 'Pancheshwar', 'पञ्चेश्वर', 74, 1, 6),
+(680, 'Patan', 'पाटन', 74, 2, 10),
+(681, 'Purchaudi', 'पुर्चौडी', 74, 2, 10),
+(682, 'Shivanath', 'शिवनाथ', 74, 1, 6),
+(683, 'Sigas', 'सिगास', 74, 1, 9),
+(684, 'Surnaya', 'सुर्नया', 74, 1, 8),
+(685, 'Bithadchir', 'वित्थडचिर', 68, 1, 9),
+(686, 'Bungal', 'बुंगल', 68, 2, 11),
+(687, 'Chabispathivera', 'छबिसपाथिभेरा', 68, 1, 7),
+(688, 'Durgathali', 'दुर्गाथली', 68, 1, 7),
+(689, 'JayaPrithivi', 'जयपृथ्वी', 68, 2, 11),
+(690, 'Saipal', 'साइपाल', 68, 1, 5),
+(691, 'Kedarseu', 'केदारस्युँ', 68, 1, 9),
+(692, 'Khaptadchhanna', 'खप्तडछान्ना', 68, 1, 7),
+(693, 'Masta', 'मष्टा', 68, 1, 7),
+(694, 'Surma', 'सूर्मा', 68, 1, 5),
+(695, 'Talkot', 'तलकोट', 68, 1, 7),
+(696, 'Thalara', 'थलारा', 68, 1, 9),
+(697, 'Badimalika', 'बडीमालिका', 67, 2, 9),
+(698, 'Budhiganga', 'बुढीगंगा', 67, 2, 10),
+(699, 'Budhinanda', 'बुढीनन्दा', 67, 2, 10),
+(700, 'Khaptad Chhededaha', 'खप्तड छेडेदह', 67, 1, 7),
+(701, 'Gaumul', 'गौमुल', 67, 1, 6),
+(702, 'Himali', 'हिमाली', 67, 1, 7),
+(703, 'Jagannath', 'जगन्‍नाथ', 67, 1, 6),
+(704, 'Swamikartik Khapar', 'स्वामीकार्तिक खापर', 67, 1, 5),
+(705, 'Tribeni', 'त्रिवेणी', 67, 2, 9),
+(706, 'Ajaymeru', 'अजयमेरु', 73, 1, 6),
+(707, 'Alital', 'आलिताल', 73, 1, 8),
+(708, 'Amargadhi', 'अमरगढी', 73, 2, 11),
+(709, 'Bhageshwar', 'भागेश्वर', 73, 1, 5),
+(710, 'Ganayapdhura', 'गन्यापधुरा', 73, 1, 5),
+(711, 'Nawadurga', 'नवदुर्गा', 73, 1, 5),
+(712, 'Parashuram', 'परशुराम', 73, 2, 12),
+(713, 'Apihimal', 'अपिहिमाल', 75, 1, 6),
+(714, 'Byans', 'ब्याँस', 75, 1, 6),
+(715, 'Dunhu', 'दुहुँ', 75, 1, 5),
+(716, 'Lekam', 'लेकम', 75, 1, 6),
+(717, 'Mahakali', 'महाकाली', 75, 2, 9),
+(718, 'Malikaarjun', 'मालिकार्जुन', 75, 1, 8),
+(719, 'Marma', 'मार्मा', 75, 1, 6),
+(720, 'Naugad', 'नौगाड', 75, 1, 6),
+(721, 'Shailyashikhar', 'शैल्यशिखर', 75, 2, 9),
+(722, 'Adharsha', 'आदर्श', 70, 1, 7),
+(723, 'Badikedar', 'बडीकेदार', 70, 1, 5),
+(724, 'Bogatan Phudsil', 'बोगटान फुड्सिल', 70, 1, 7),
+(725, 'Dipayal Silgadi', 'दिपायल सिलगढी', 70, 2, 9),
+(726, 'Jorayal', 'जोरायल', 70, 1, 6),
+(727, 'K I Singh', 'के.आई.सिं.', 70, 1, 7),
+(728, 'Purbichauki', 'पूर्वीचौकी', 70, 1, 7),
+(729, 'Sayal', 'सायल', 70, 1, 6),
+(730, 'Shikhar', 'शिखर', 70, 2, 11),
+(731, 'Bardagoriya', 'बर्दगोरिया', 71, 1, 6),
+(732, 'Bhajani', 'भजनी', 71, 2, 9),
+(733, 'Chure', 'चुरे', 71, 1, 6),
+(734, 'Dhangadhi', 'धनगढी', 71, 3, 19),
+(735, 'Gauriganga', 'गौरीगंगा', 71, 2, 11),
+(736, 'Ghodaghodi', 'घोडाघोडी', 71, 2, 12),
+(737, 'Godawari', 'गोदावरी', 71, 2, 12),
+(738, 'Janaki', 'जानकी', 71, 1, 9),
+(739, 'Joshipur', 'जोशीपुर', 71, 1, 7),
+(740, 'Kailari', 'कैलारी', 71, 1, 9),
+(741, 'Lamkichuha', 'लम्कीचुहा', 71, 2, 10),
+(742, 'Mohanyal', 'मोहन्याल', 71, 1, 7),
+(743, 'Tikapur', 'टिकापुर', 71, 2, 9),
+(744, 'Bedkot', 'वेदकोट', 72, 2, 10),
+(745, 'Belauri', 'बेलौरी', 72, 2, 10),
+(746, 'Beldandi', 'बेलडाडी', 72, 1, 5),
+(747, 'Bhimdatta', 'भीमदत्त', 72, 2, 19),
+(748, 'Krishnapur', 'कृष्णपुर', 72, 2, 9),
+(749, 'Laljhadi', 'लालझाडी', 72, 1, 6),
+(750, 'Dodhara Chandani', 'दोधारा चादँनी', 72, 2, 10),
+(751, 'Punarbas', 'पुर्नवास', 72, 2, 11),
+(752, 'Shuklaphanta', 'शुक्लाफाँटा', 72, 2, 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadaconnectofficedetails`
+--
+
+DROP TABLE IF EXISTS `wadaconnectofficedetails`;
+CREATE TABLE IF NOT EXISTS `wadaconnectofficedetails` (
+  `wadaConnnectOfficeID` int NOT NULL AUTO_INCREMENT,
+  `wadaConnectOfficeProvince` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaConnnectOfficeDistrict` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaConnnectOfficeMunicipality` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaConnectOfficeMunicipalityType` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaConnectOfficeWard` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`wadaConnnectOfficeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wadaconnectofficedetails`
+--
+
+INSERT INTO `wadaconnectofficedetails` (`wadaConnnectOfficeID`, `wadaConnectOfficeProvince`, `wadaConnnectOfficeDistrict`, `wadaConnnectOfficeMunicipality`, `wadaConnectOfficeMunicipalityType`, `wadaConnectOfficeWard`) VALUES
+(1, 'Madhesh', 'Parsa', 'Birgunj', 'Metropolitan', '15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadaconnectprovincenepal`
+--
+
+DROP TABLE IF EXISTS `wadaconnectprovincenepal`;
+CREATE TABLE IF NOT EXISTS `wadaconnectprovincenepal` (
+  `provinceNepalID` int NOT NULL AUTO_INCREMENT,
+  `provinceEnglishName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provinceNepaliName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provinceHeadQuartersEnglishName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provinceHeadQuartersNepaliName` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`provinceNepalID`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wadaconnectprovincenepal`
+--
+
+INSERT INTO `wadaconnectprovincenepal` (`provinceNepalID`, `provinceEnglishName`, `provinceNepaliName`, `provinceHeadQuartersEnglishName`, `provinceHeadQuartersNepaliName`) VALUES
+(1, 'Koshi', 'कोशी', 'Biratnagar', 'बिराटनगर'),
+(2, 'Madhesh', 'मधेश', 'Janakpur', 'जनकपूर'),
+(3, 'Bagmati', 'बागमति', 'Hetauda', 'हेटौडा'),
+(4, 'Gandaki', 'गण्डकी', 'Pokhara', 'पोखरा'),
+(5, 'Lumbini', 'लुम्बिनी', 'Deukhuri', 'देउखुरी'),
+(6, 'Karnali', 'कर्णाली', 'Birendranagar', 'बिरेन्द्रनगर'),
+(7, 'Sudurpashchim', 'सुदुरपश्चिम', 'Godawari', 'गोदावरी');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadaconnectusertype`
+--
+
+DROP TABLE IF EXISTS `wadaconnectusertype`;
+CREATE TABLE IF NOT EXISTS `wadaconnectusertype` (
+  `userTypeID` int NOT NULL AUTO_INCREMENT,
+  `userTypeName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`userTypeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wadaconnectusertype`
+--
+
+INSERT INTO `wadaconnectusertype` (`userTypeID`, `userTypeName`) VALUES
+(1, 'Wada Admin'),
+(2, 'Wada Officer'),
+(3, 'Wada Member');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamemberaddressdetails`
+--
+
+DROP TABLE IF EXISTS `wadamemberaddressdetails`;
+CREATE TABLE IF NOT EXISTS `wadamemberaddressdetails` (
+  `wadaMemberAddressDetailsID` int NOT NULL,
+  `wadaMemberPermanentProvince` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberPermanentDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberPermanentMunicipality` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberPermanentWard` smallint NOT NULL,
+  `wadaMemberTemperoryProvince` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberTemperoryDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberTemperoryMunicipality` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberTemperoryWard` smallint NOT NULL,
+  KEY `wadaMemberAddressDetailsRef` (`wadaMemberAddressDetailsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamembercitizenshipdetails`
+--
+
+DROP TABLE IF EXISTS `wadamembercitizenshipdetails`;
+CREATE TABLE IF NOT EXISTS `wadamembercitizenshipdetails` (
+  `wadaMemberCitizenshipDetailsID` int NOT NULL,
+  `wadaMemberCitizenshipNumber` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberCitizenshipIssuedDate` date NOT NULL,
+  `wadaMemberCitizenshipIssuedDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  KEY `wadaMemberCitizenshipDetailsRef` (`wadaMemberCitizenshipDetailsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamemberelectricconnectiondata`
+--
+
+DROP TABLE IF EXISTS `wadamemberelectricconnectiondata`;
+CREATE TABLE IF NOT EXISTS `wadamemberelectricconnectiondata` (
+  `wadaMemberElectricConnectionFormID` int NOT NULL AUTO_INCREMENT,
+  `wadaMemberElectricConnectionUserID` int NOT NULL,
+  `wadaMemberElectricConnectionDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionMunicipality` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionMunicipalityType` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionWard` smallint NOT NULL,
+  `wadaMemberElectricConnectionMapNo` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionKittaNo` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionArea` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionCitizenshipDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionLandOwnershipDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionLandMapDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionLandTaxDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberElectricConnectionSubmittedDateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wadaMemberElectricConnectionFormID`),
+  KEY `wadaMemberElectricConnectionDataRef` (`wadaMemberElectricConnectionUserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamemberfamilydetails`
+--
+
+DROP TABLE IF EXISTS `wadamemberfamilydetails`;
+CREATE TABLE IF NOT EXISTS `wadamemberfamilydetails` (
+  `wadaMemberFamilyDetailsID` int NOT NULL,
+  `wadaMemberFatherName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberMotherName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberGrandFatherName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberMaritalStatus` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberSpouseName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberNumberOfChildern` smallint NOT NULL,
+  KEY `wadaMemberFamilyDetailsRef` (`wadaMemberFamilyDetailsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamemberfourboundariesdata`
+--
+
+DROP TABLE IF EXISTS `wadamemberfourboundariesdata`;
+CREATE TABLE IF NOT EXISTS `wadamemberfourboundariesdata` (
+  `wadaMemberFourBoundariesFormID` int NOT NULL AUTO_INCREMENT,
+  `wadaMemberFourBoundariesUserID` int NOT NULL,
+  `wadaMemberFourBoundariesDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesMunicipality` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesMunicipalityType` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesWard` smallint NOT NULL,
+  `wadaMemberFourBoundariesKittaNo` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesArea` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesEastPersonName` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesEast` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesWestPersonName` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesWest` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesNorthPersonName` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesNorth` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesSouthPersonName` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesSouth` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesCitizenshipDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesLandOwnershipDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesLandMapDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesLandTaxDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFourBoundariesSubmittedDateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wadaMemberFourBoundariesFormID`),
+  KEY `wadaMemberFourBoundariesDataRef` (`wadaMemberFourBoundariesUserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamemberhouseroaddetails`
+--
+
+DROP TABLE IF EXISTS `wadamemberhouseroaddetails`;
+CREATE TABLE IF NOT EXISTS `wadamemberhouseroaddetails` (
+  `wadaMemberHouseRoadFormID` int NOT NULL AUTO_INCREMENT,
+  `wadaMemberHouseRoadUserID` int NOT NULL,
+  `wadaMemberHouseRoadDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadMunicipality` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadMunicipalityType` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadWard` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadMapNo` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadKittaNo` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadArea` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadRoadPresence` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadHouseBuyerName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadBuyerSpouseName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadBuyerCitizenshipNo` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadBuyerCitizenshipDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadBuyerProvince` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadBuyerDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadBuyerMunicipality` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadBuyerWard` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadCitizenshipDocument` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadLandOwnershipDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadLandMapDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadLandTaxDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberHouseRoadSubmittedDateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wadaMemberHouseRoadFormID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamemberlogindata`
+--
+
+DROP TABLE IF EXISTS `wadamemberlogindata`;
+CREATE TABLE IF NOT EXISTS `wadamemberlogindata` (
+  `usersLoginID` int NOT NULL AUTO_INCREMENT,
+  `userEmail` varchar(320) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userUsername` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userPassword` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `userType` int NOT NULL,
+  `userLastLogin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`usersLoginID`),
+  KEY `userTypeRef` (`userType`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamembernepalidetails`
+--
+
+DROP TABLE IF EXISTS `wadamembernepalidetails`;
+CREATE TABLE IF NOT EXISTS `wadamembernepalidetails` (
+  `wadaMemberNepaliDetailsID` int NOT NULL,
+  `wadaMemberFirstNameNP` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberMiddleNameNP` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberLastNameNP` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberFathersNameNP` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberMothersNameNP` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberGrandFatherNameNP` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberSpouseNameNP` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  KEY `wadaMemberNepaliDetailsRef` (`wadaMemberNepaliDetailsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamemberpersonaldetails`
+--
+
+DROP TABLE IF EXISTS `wadamemberpersonaldetails`;
+CREATE TABLE IF NOT EXISTS `wadamemberpersonaldetails` (
+  `wadaMemberID` int NOT NULL AUTO_INCREMENT,
+  `wadaMemberUserLoginID` int NOT NULL,
+  `wadaMemberType` int NOT NULL,
+  `wadaMemberFirstName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberMiddleName` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `wadaMemberLastName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberDateOfBirth` date NOT NULL,
+  `wadaMemberGender` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberPhoneNo` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberCreationDateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wadaMemberID`),
+  KEY `wadaConnectUserTypeRef` (`wadaMemberType`),
+  KEY `wadaMemberUserLoginIDRef` (`wadaMemberUserLoginID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamemberrelationdetails`
+--
+
+DROP TABLE IF EXISTS `wadamemberrelationdetails`;
+CREATE TABLE IF NOT EXISTS `wadamemberrelationdetails` (
+  `wadaMemberRelationFormID` int NOT NULL AUTO_INCREMENT,
+  `wadaMemberRelationUserID` int NOT NULL,
+  `wadaMemberRelationFullName` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationAge` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationGender` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationShip` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationDistrict` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationMunicipality` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationMunicipalityType` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationWard` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationCitizenshipDocument` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberRelationSubmittedDateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wadaMemberRelationFormID`),
+  KEY `wadaMemberRelationUserIDRef` (`wadaMemberRelationUserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wadamembersdocumentdetails`
+--
+
+DROP TABLE IF EXISTS `wadamembersdocumentdetails`;
+CREATE TABLE IF NOT EXISTS `wadamembersdocumentdetails` (
+  `wadaMemberDocumentDetailsID` int NOT NULL,
+  `wadaMemberDocumentTypeProfilePicture` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberDocumentTypeCitizenshipCard` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wadaMemberDocumentTypeSignature` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
+  KEY `wadamemberDocumentsDetailsRef` (`wadaMemberDocumentDetailsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `wadaconnectapplicationlisting`
+--
+ALTER TABLE `wadaconnectapplicationlisting`
+  ADD CONSTRAINT `wadaConnectApplicationTypeRef` FOREIGN KEY (`wadaConnectApplicationType`) REFERENCES `wadaconnectapplicationtype` (`wadaConnectApplicationTypeID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `wadaConnectApplicationUserIDRef` FOREIGN KEY (`wadaConnectApplicationUserID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadaconnectdistrictnepal`
+--
+ALTER TABLE `wadaconnectdistrictnepal`
+  ADD CONSTRAINT `provinceDistrictNepalIDRef` FOREIGN KEY (`provinceDistrictNepalID`) REFERENCES `wadaconnectprovincenepal` (`provinceNepalID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadaconnectlocallevelnepal`
+--
+ALTER TABLE `wadaconnectlocallevelnepal`
+  ADD CONSTRAINT `localLevelCityTypeIDRef` FOREIGN KEY (`localLevelCityTypeID`) REFERENCES `wadaconnectcitytypenepal` (`cityTypeID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `localLevelDistrictIDRef` FOREIGN KEY (`localLevelDistrictID`) REFERENCES `wadaconnectdistrictnepal` (`districtNepalID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamemberaddressdetails`
+--
+ALTER TABLE `wadamemberaddressdetails`
+  ADD CONSTRAINT `wadaMemberAddressDetailsRef` FOREIGN KEY (`wadaMemberAddressDetailsID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamembercitizenshipdetails`
+--
+ALTER TABLE `wadamembercitizenshipdetails`
+  ADD CONSTRAINT `wadaMemberCitizenshipDetailsRef` FOREIGN KEY (`wadaMemberCitizenshipDetailsID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamemberelectricconnectiondata`
+--
+ALTER TABLE `wadamemberelectricconnectiondata`
+  ADD CONSTRAINT `wadaMemberElectricConnectionDataRef` FOREIGN KEY (`wadaMemberElectricConnectionUserID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamemberfamilydetails`
+--
+ALTER TABLE `wadamemberfamilydetails`
+  ADD CONSTRAINT `wadaMemberFamilyDetailsRef` FOREIGN KEY (`wadaMemberFamilyDetailsID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamemberfourboundariesdata`
+--
+ALTER TABLE `wadamemberfourboundariesdata`
+  ADD CONSTRAINT `wadaMemberFourBoundariesDataRef` FOREIGN KEY (`wadaMemberFourBoundariesUserID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamemberlogindata`
+--
+ALTER TABLE `wadamemberlogindata`
+  ADD CONSTRAINT `userTypeRef` FOREIGN KEY (`userType`) REFERENCES `wadaconnectusertype` (`userTypeID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamembernepalidetails`
+--
+ALTER TABLE `wadamembernepalidetails`
+  ADD CONSTRAINT `wadaMemberNepaliDetailsRef` FOREIGN KEY (`wadaMemberNepaliDetailsID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamemberpersonaldetails`
+--
+ALTER TABLE `wadamemberpersonaldetails`
+  ADD CONSTRAINT `wadaConnectUserTypeRef` FOREIGN KEY (`wadaMemberType`) REFERENCES `wadaconnectusertype` (`userTypeID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `wadaMemberUserLoginIDRef` FOREIGN KEY (`wadaMemberUserLoginID`) REFERENCES `wadamemberlogindata` (`usersLoginID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamemberrelationdetails`
+--
+ALTER TABLE `wadamemberrelationdetails`
+  ADD CONSTRAINT `wadaMemberRelationUserIDRef` FOREIGN KEY (`wadaMemberRelationUserID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `wadamembersdocumentdetails`
+--
+ALTER TABLE `wadamembersdocumentdetails`
+  ADD CONSTRAINT `wadamemberDocumentsDetailsRef` FOREIGN KEY (`wadaMemberDocumentDetailsID`) REFERENCES `wadamemberpersonaldetails` (`wadaMemberID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -70,12 +70,7 @@ if (!isset($_SESSION['userLoginStatus']) || $_SESSION['userLoginStatus'] !== tru
                 <span>Applications Approved</span>
               </a>
             </li>
-            <li class="sidebar-item">
-              <a href="challan_registery.php" class="sidebar-link">
-                <i class="bi bi-person-lines-fill"></i>
-                <span>Challan Registery</span>
-              </a>
-            </li>
+            
             <li class="sidebar-item">
               <a href="wada_user_account.php" class="sidebar-link">
                 <i class="bi bi-person-circle"></i>
@@ -266,7 +261,7 @@ if (!isset($_SESSION['userLoginStatus']) || $_SESSION['userLoginStatus'] !== tru
             <p>
               Programmed with
               <span class="text-danger"><i class="bi bi-heart"></i></span> by
-              <a href="https://haitomns.com">Haitomns Groups Private Limited</a>
+              <a href="#">Inbox Coders/a>
             </p>
           </div>
         </div>

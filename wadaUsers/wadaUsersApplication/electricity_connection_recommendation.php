@@ -283,7 +283,7 @@ if ($_SESSION['wadaMemberID'] == 0) {
             <p>
               Programmed with
               <span class="text-danger"><i class="bi bi-heart"></i></span> by
-              <a href="https://haitomns.com">Haitomns Groups Private Limited</a>
+              <a href="#">Inbox Coders/a>
             </p>
           </div>
         </div>

@@ -128,30 +128,6 @@ if (!isset($_SESSION['userLoginStatus']) || $_SESSION['userLoginStatus'] !== tru
           </div>
         </div>
 
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">Form Filler</h4>
-            </div>
-            <div class="card-content">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-4 col-12">
-                    <div class="form-group">
-                      <label for="form-filler-citizenship-column">Citizenship Document</label>
-                      <input type="file" class="form-control" id="formFile" name="form-filler-citizenship-column" data-parsley-required="true" data-parsley-error-message="Citizenship is required.">
-                    </div>
-                  </div>
-                  <div class="col-12 d-flex justify-content-end">
-                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                    <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <?php
         require_once '../php/select_wada_member.php';
         ?>
@@ -633,7 +609,7 @@ if (!isset($_SESSION['userLoginStatus']) || $_SESSION['userLoginStatus'] !== tru
             <p>
               Programmed with
               <span class="text-danger"><i class="bi bi-heart"></i></span> by
-              <a href="https://haitomns.com">Haitomns Groups Private Limited</a>
+              <a href="#">Inbox Coders/a>
             </p>
           </div>
         </div>
